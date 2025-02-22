@@ -1,19 +1,34 @@
 const mix = require('laravel-mix');
+const path = require('path');
 
 mix.disableNotifications();
 
-mix.sass('resources/assets/sass/admin.scss', 'public/css')
-    .options({
-        processCssUrls: false,
-        module: {
-            rules: [
-                {
-                    test: /\.css$/,
-                    loader: "style-loader!css-loader"
+mix.webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.(woff2?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'fonts/[name][ext]'
                 }
-            ]
+            }
+        ]
+    },
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'resources/assets/js')
         }
-    })
-    .js('resources/assets/js/app.js', 'public/admin/js')
-    .extract(['vue', 'vue-router', 'vue-bus', 'element-ui', 'axios', 'lodash',
-        'jquery', 'echarts', 'vue-cookie'], 'public/admin/js/vendor.js');
+    }
+});
+
+// Asegúrate de que processCssUrls esté en false
+mix.options({
+    processCssUrls: false
+});
+
+mix.js('resources/assets/js/app.js', 'public/admin/js')
+   .vue({ version: 2 })
+   .sass('resources/assets/sass/admin.scss', 'public/css')
+   .extract(['vue', 'vue-router', 'vue-bus', 'element-ui', 'axios', 'lodash',
+        'jquery', 'echarts', 'vue-cookie']);

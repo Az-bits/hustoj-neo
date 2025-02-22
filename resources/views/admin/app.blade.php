@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>HUST OJ DashBoard</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{asset('css/admin.css')}}">
     <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
 </head>

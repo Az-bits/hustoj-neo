@@ -5,7 +5,7 @@
  */
 
 require("./bootstrap");
-
+import Vue from "vue";
 window.Vue = require("vue");
 
 /**
@@ -33,9 +33,9 @@ Vue.use(VueRouter);
 import VueBus from "vue-bus";
 Vue.use(VueBus);
 
-import ElementUI from "element-ui";
+import ElementUI from 'element-ui';
 import locale from "element-ui/lib/locale/lang/en";
-import "element-ui/lib/theme-chalk/index.css";
+import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI, { locale });
 
 import axios from "axios";
@@ -65,14 +65,15 @@ axios.interceptors.response.use(
         if (error.response.status == 401) {
             return (window.location.href = BASE_URL);
         }
-        Vue.$message.error(response.statusText);
+        // Vue.$message.error(response.statusText);
+        Vue.prototype.$message.error(error.response.statusText);
     }
 );
 
 import routes from "./routes";
 
 const router = new VueRouter({
-    // mode: 'history',
+    mode: 'history',
     hashbang: true,
     saveScrollPosition: true,
     transitionOnLoad: true,
